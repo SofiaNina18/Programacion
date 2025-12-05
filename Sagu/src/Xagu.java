@@ -1,4 +1,5 @@
 import java.awt.EventQueue;
+import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,6 +12,10 @@ public class Xagu extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnSalir;
+	private JButton btnCargar;
+	private JButton btnBuscarSalida;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -41,19 +46,25 @@ public class Xagu extends JFrame {
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
+		panel.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JButton btnCargar = new JButton("Cargar");
+		btnCargar = new JButton("Cargar");
 		panel.add(btnCargar);
 		
-		JButton btnBuscar = new JButton("Buscar Salida");
-		panel.add(btnBuscar);
+		btnBuscarSalida = new JButton("Buscar Salida");
+		panel.add(btnBuscarSalida);
 		
 		btnSalir = new JButton("Salir");
 		panel.add(btnSalir);
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new BorderLayout(0, 0));
 
+	}//Fin del constructor
+	
+	public void crearLabels() {
+		//Vamos a hacer un array bidemensional de JLabels
 	}
 
 }
