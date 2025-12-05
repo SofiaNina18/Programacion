@@ -77,13 +77,13 @@ public class BaseDatos {
 		}return 0;
 		}
 		
-	public int eliminarSocio(int numSocio) {
+	public int eliminarSocio(int id) {
 		String sent;
 		PreparedStatement sentencia;
 		sent = "DELETE FROM socios WHERE numSocio = ?";
 		try {
 			sentencia=cn.prepareStatement(sent);
-			sentencia.setInt(1, numSocio);
+			sentencia.setInt(1, id);
 			return sentencia.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
