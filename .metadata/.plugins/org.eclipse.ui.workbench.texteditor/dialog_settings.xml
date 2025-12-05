@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="hasShownOverlayPopupBefore" value="true"/>
+	<section name="java.lang.Class">
+		<item key="replaceBarOpen" value="false"/>
+		<list key="findhistory">
+			<item value="No se ha"/>
+			<item value="modoedi"/>
+			<item value="modoe"/>
+			<item value="btnCancel"/>
+			<item value="btnEdit"/>
+			<item value="registrar"/>
+			<item value="baseDatos"/>
+			<item value="socios"/>
+			<item value="socios.socios"/>
+			<item value="compro"/>
+			<item value="timer"/>
+			<item value="comprobarfin"/>
+			<item value="regitra"/>
+			<item value="ganador"/>
+			<item value="registra"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="724"/>
+		<item key="DIALOG_Y_ORIGIN" value="416"/>
+	</section>
+</section>

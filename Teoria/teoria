@@ -1,0 +1,58 @@
+El error "Error: No se encontró el archivo 'juegos.txt'" que ves en la consola de Eclipse se debe a que **el entorno de ejecución (runtime) no puede localizar el archivo `juegos.txt`** en la ubicación que está buscando por defecto.
+
+-----
+
+## 🛠️ Cómo Solucionar el Error
+
+En Java, cuando llamas a `new File("juegos.txt")`, el programa busca el archivo en el **directorio de trabajo** actual. En la mayoría de los IDEs como Eclipse, este directorio es la **raíz del proyecto**.
+
+Aquí tienes los pasos para solucionarlo:
+
+### 1\. 📂 Mueve el Archivo a la Ubicación Correcta
+
+Debes colocar el archivo `juegos.txt` en la **carpeta raíz de tu proyecto de Eclipse**.
+
+  * En tu caso, según la captura, el proyecto se llama **`examenprimertrimestre`**.
+  * El archivo **`juegos.txt`** debe estar directamente dentro de la carpeta **`examenprimertrimestre`**, no dentro de `src/package examenprimertrimestre` donde está tu código Java.
+
+### 2\. Actualiza la Vista en Eclipse
+
+Si ya moviste el archivo externamente, haz clic derecho en el nombre de tu proyecto (`examenprimertrimestre`) en el **`Project Explorer`** y selecciona **`Refresh`** (o presiona F5) para que Eclipse reconozca el nuevo archivo.
+
+Deberías ver el archivo `juegos.txt` aparecer al mismo nivel que las carpetas `src` y `JRE System Library`, como se muestra en este ejemplo:
+
+```
+📦 examenprimertrimestre  <-- Aquí debe estar el archivo
+ ├── 📜 juegos.txt
+ ├── 📦 src
+ └── 🗄️ JRE System Library
+```
+
+-----
+
+## 💡 Alternativa (Si el Archivo debe estar en `src`)
+
+Si tu profesor o el entorno de la prueba exige que el archivo de datos esté dentro del directorio de código fuente (`src/examenprimertrimestre/`), tienes que cambiar la forma en que Java lo busca, ya que el archivo no se busca en el directorio de trabajo:
+
+1.  **Mueve el archivo `juegos.txt`** a la misma carpeta que `ejercicio3.java` (`src/examenprimertrimestre/`).
+2.  **Usa `ClassLoader`** para acceder al archivo como un recurso del programa.
+
+<!-- end list -->
+
+```java
+import java.io.InputStream;
+// ... otras importaciones
+
+// Dentro del método main o de la función de lectura:
+InputStream is = ProcesadorJuegosArrays.class.getResourceAsStream(nombreFichero);
+
+if (is == null) {
+    System.err.println("❌ Error: Recurso no encontrado.");
+    return;
+}
+
+// Ahora, usas el InputStream para crear el Scanner, en lugar del File:
+Scanner lector = new Scanner(is); 
+```
+
+**Nota:** Para este ejercicio, lo más sencillo y común es seguir el **Paso 1** (colocar `juegos.txt` en la raíz del proyecto).

@@ -1,0 +1,6 @@
+Operación: Sumar Pares
+Números introducidos: 20 25 25 2 10
+Resultado: 32
+Operación: Sumar Impares
+Números introducidos: 20 20 32 21
+Resultado: 21

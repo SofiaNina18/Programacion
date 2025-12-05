@@ -1,0 +1,4 @@
+Estamos en casa de programación
+Vamos a utilizar ficheros
+
+Luego lo mostraremos por pantalla
