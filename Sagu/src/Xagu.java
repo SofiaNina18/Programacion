@@ -28,6 +28,7 @@ public class Xagu extends JFrame {
 
 	private JLabel[][] casillas;
 	private JPanel panelLaberinto;
+	private int filaXagu, colXagu;
 
 	/**
 	 * Launch the application.
@@ -84,6 +85,22 @@ public class Xagu extends JFrame {
 				cargarMapa();
 			}
 		});
+		btnBuscarSalida.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				buscarSalida(casillas, filaXagu, colXagu);
+			}
+		});
+	}//FIN DE REGISTRAR EVENTOS
+	
+	
+	public void buscarSalida(JLabel [][] casillas, int filaXagu, int colXagu) {
+		if (filaXagu==0 || filaXagu==FILAS-1 || colXagu==0 || colXagu==COLS-1) {
+			//Marcar camino y cuando pase dejar -
+			casillas[filaXagu][colXagu].setText("-");
+		}
 	}
 
 	protected void cargarMapa() {
@@ -108,7 +125,7 @@ public class Xagu extends JFrame {
 		if (fich!=null) {
 			try {
 				scFich = new Scanner(new File(dlgMapa.getDirectory() + fich));
-				scFich=new Scanner(new File("./img/mapa1.txt"));
+				//scFich=new Scanner(new File(".\\img\\"+fich));
 				int fila = 0;
 				while (scFich.hasNext()) {
 					//LEER UNA LINEA
@@ -120,6 +137,7 @@ public class Xagu extends JFrame {
 						//si es 2 -> Cargar imagen de Xagu.jpg
 						if (linea.charAt(col) == '0') {
 							casillas[fila][col].setText("");
+							casillas[fila][col].setIcon(null); //hace que desaparezca la imagen
 							//que el mapa solo se active en uno mapa
 							
 						} if (linea.charAt(col) == '1') 
@@ -127,8 +145,12 @@ public class Xagu extends JFrame {
 						{
 							//casillas[fila][col].setIcon(new ImageIcon("./img/muro.jpg"));
 							casillas[fila][col].setIcon(new ImageIcon(getClass().getResource("muro.jpg")));
+							casillas[fila][col].setText("*");
 						} if (linea.charAt(col) == '2') {
-							casillas[fila][col].setIcon(new ImageIcon("./img/Xagu.jpg"));
+							casillas[fila][col].setIcon(new ImageIcon(getClass().getResource("xagu.jpg")));
+							casillas[fila][col].setText("*");
+							filaXagu=fila;
+							colXagu=col;
 						}
 					} fila++;
 				}
