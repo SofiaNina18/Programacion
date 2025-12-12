@@ -29,6 +29,7 @@ public class Xagu extends JFrame {
 	private JLabel[][] casillas;
 	private JPanel panelLaberinto;
 	private int filaXagu, colXagu;
+	private boolean salidaEncontrada;
 
 	/**
 	 * Launch the application.
@@ -93,15 +94,48 @@ public class Xagu extends JFrame {
 				buscarSalida(casillas, filaXagu, colXagu);
 			}
 		});
+		btnSalir.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.exit(0);
+			}
+		});
 	}//FIN DE REGISTRAR EVENTOS
 	
 	
 	public void buscarSalida(JLabel [][] casillas, int filaXagu, int colXagu) {
 		if (filaXagu==0 || filaXagu==FILAS-1 || colXagu==0 || colXagu==COLS-1) {
 			//Marcar camino y cuando pase dejar -
-			casillas[filaXagu][colXagu].setText("-");
+			casillas[filaXagu][colXagu].setText("$");
+			salidaEncontrada=true;
+			return; //para evitar un else
+			
 		}
+		//LLAMADAS RECURSIVAS
+		casillas[filaXagu][colXagu].setText("-");
+		
+		//Hacia arriba
+		if (!salidaEncontrada && casillas[filaXagu-1][colXagu].getText().equals("")) {
+			buscarSalida(casillas, filaXagu-1, colXagu);
+			}
+		//Hacia la derecha
+		if (!salidaEncontrada && casillas[filaXagu][colXagu+1].getText().equals("")) {
+			buscarSalida(casillas, filaXagu, colXagu+1);
+			}
+		//Hacia abajo
+		if (!salidaEncontrada && casillas[filaXagu+1][colXagu].getText().equals("")) {
+			buscarSalida(casillas, filaXagu+1, colXagu);
+			}
+		//Hacia la izquierda
+		if (!salidaEncontrada && casillas[filaXagu][colXagu-1].getText().equals("")) {
+			buscarSalida(casillas, filaXagu, colXagu-1);
+			}
+			
+		
+		
 	}
+		
 
 	protected void cargarMapa() {
 		// TODO Auto-generated method stub
@@ -110,6 +144,7 @@ public class Xagu extends JFrame {
 		FileDialog dlgMapa;
 		String linea;
 		String fich;
+		salidaEncontrada=false;
 
 		dlgMapa = new FileDialog(this, "Cargar Mapa", FileDialog.LOAD);
 		// Antes de mostrar el dialogo, podemos configurar algunas cosas
@@ -182,7 +217,7 @@ public class Xagu extends JFrame {
 				panelLaberinto.add(lblAux);
 				casillas[fila][col] = lblAux;
 			}
-		}
+		} 
 
 	}
 
