@@ -6,7 +6,7 @@
  * 	Numero 1: 1
  * 	Numero 2: 2
  * 	Numero 3: 3
- * .........:
+ * .........: 
  * 	Numero 10: 10
  * 
  * Los numeros guardados son: 
