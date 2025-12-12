@@ -131,7 +131,10 @@ public class Xagu extends JFrame {
 		if (!salidaEncontrada && casillas[filaXagu][colXagu-1].getText().equals("")) {
 			buscarSalida(casillas, filaXagu, colXagu-1);
 			}
-			
+		if (!salidaEncontrada) {
+			casillas[filaXagu][colXagu].setText("$");
+		}
+		
 		
 		
 	}
