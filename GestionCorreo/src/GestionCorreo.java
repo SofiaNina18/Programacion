@@ -159,5 +159,13 @@ public class GestionCorreo extends JFrame {
 		txtWebs.setBounds(652, 225, 46, 14);
 		contentPane.add(txtWebs);
 
+		registrarEventos();
+		
+	}//FIN DEL CONSTRUCTOR
+	
+	private void registrarEventos() {
+		
+		
+		
 	}
 }
