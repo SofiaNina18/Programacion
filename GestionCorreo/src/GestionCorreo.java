@@ -5,10 +5,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class GestionCorreo extends JFrame {
 
@@ -21,18 +24,13 @@ public class GestionCorreo extends JFrame {
 	private JTextField txtEdad;
 	private JTextField txtDireccion;
 	private JTextField txtTelefono;
-	
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_1_1;
-	private JCheckBox chckbxNewCheckBox;
-	private JLabel lblEdad;
-	private JLabel lblNewLabel_1_2;
-	private JLabel lblNewLabel_1_1_1;
-	private JLabel txtNombres;
+	private JCheckBox chkEmpleado;
 	private JList<String> lstNombres;
 	private JList<String> lstCorreos;
 	private JList<String> listWebs;
+
+	private DefaultListModel<String> modeloNombres, modeloCorreos, modeloWebs;
+	private JPanel panelEmpleado;
 
 	/**
 	 * Launch the application.
@@ -62,15 +60,15 @@ public class GestionCorreo extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		lblNewLabel = new JLabel("Nombre:");
-		lblNewLabel.setBounds(65, 95, 46, 14);
+		JLabel lblNewLabel = new JLabel("Nombre:");
+		lblNewLabel.setBounds(65, 95, 59, 14);
 		contentPane.add(lblNewLabel);
 		
-		lblNewLabel_1 = new JLabel("Correo:");
+		JLabel lblNewLabel_1 = new JLabel("Correo:");
 		lblNewLabel_1.setBounds(65, 123, 46, 14);
 		contentPane.add(lblNewLabel_1);
 		
-		lblNewLabel_1_1 = new JLabel("Web:");
+		JLabel lblNewLabel_1_1 = new JLabel("Web:");
 		lblNewLabel_1_1.setBounds(65, 151, 46, 14);
 		contentPane.add(lblNewLabel_1_1);
 		
@@ -93,40 +91,40 @@ public class GestionCorreo extends JFrame {
 		btnADD.setBounds(376, 147, 89, 23);
 		contentPane.add(btnADD);
 		
-		chckbxNewCheckBox = new JCheckBox("Empleado");
-		chckbxNewCheckBox.setBounds(368, 91, 97, 23);
-		contentPane.add(chckbxNewCheckBox);
+		chkEmpleado = new JCheckBox("Empleado");
+		chkEmpleado.setBounds(368, 91, 97, 23);
+		contentPane.add(chkEmpleado);
 		
-		JPanel panelEmpleado = new JPanel();
+		panelEmpleado = new JPanel();
 		panelEmpleado.setBounds(527, 87, 316, 94);
 		contentPane.add(panelEmpleado);
 		panelEmpleado.setLayout(null);
 		
-		lblEdad = new JLabel("Edad:");
-		lblEdad.setBounds(10, 11, 46, 14);
+		JLabel lblEdad = new JLabel("Edad:");
+		lblEdad.setBounds(10, 11, 56, 14);
 		panelEmpleado.add(lblEdad);
 		
-		lblNewLabel_1_2 = new JLabel("Direccion:");
-		lblNewLabel_1_2.setBounds(10, 39, 68, 14);
+		JLabel lblNewLabel_1_2 = new JLabel("Direccion:");
+		lblNewLabel_1_2.setBounds(10, 39, 86, 14);
 		panelEmpleado.add(lblNewLabel_1_2);
 		
-		lblNewLabel_1_1_1 = new JLabel("Telefono:");
-		lblNewLabel_1_1_1.setBounds(10, 67, 46, 14);
+		JLabel lblNewLabel_1_1_1 = new JLabel("Telefono:");
+		lblNewLabel_1_1_1.setBounds(10, 67, 72, 14);
 		panelEmpleado.add(lblNewLabel_1_1_1);
 		
 		txtEdad = new JTextField();
 		txtEdad.setColumns(10);
-		txtEdad.setBounds(66, 11, 86, 20);
+		txtEdad.setBounds(74, 11, 86, 20);
 		panelEmpleado.add(txtEdad);
 		
 		txtDireccion = new JTextField();
 		txtDireccion.setColumns(10);
-		txtDireccion.setBounds(66, 39, 174, 20);
+		txtDireccion.setBounds(74, 39, 174, 20);
 		panelEmpleado.add(txtDireccion);
 		
 		txtTelefono = new JTextField();
 		txtTelefono.setColumns(10);
-		txtTelefono.setBounds(66, 67, 86, 20);
+		txtTelefono.setBounds(74, 67, 86, 20);
 		panelEmpleado.add(txtTelefono);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -135,8 +133,12 @@ public class GestionCorreo extends JFrame {
 		
 		lstNombres = new JList<String>();
 		scrollPane.setViewportView(lstNombres);
+		//INSTANCIAR EL MODELO
+		modeloNombres = new DefaultListModel<String>();
+		//ASOCIAR EL MODELO CON EL JLIST CORRESPONDIENTE
+		lstNombres.setModel(modeloNombres);
 		
-		txtNombres = new JLabel("Nombres:");
+		JLabel txtNombres = new JLabel("Nombres:");
 		txtNombres.setBounds(86, 225, 46, 14);
 		contentPane.add(txtNombres);
 		
@@ -146,6 +148,8 @@ public class GestionCorreo extends JFrame {
 		
 		lstCorreos = new JList<String>();
 		scrollPane_1.setViewportView(lstCorreos);
+		modeloCorreos = new DefaultListModel<String>();
+		lstCorreos.setModel(modeloCorreos);
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
 		scrollPane_2.setBounds(652, 249, 156, 309);
@@ -153,6 +157,8 @@ public class GestionCorreo extends JFrame {
 		
 		listWebs = new JList<String>();
 		scrollPane_2.setViewportView(listWebs);
+		modeloWebs = new DefaultListModel<String>();
+		listWebs.setModel(modeloWebs);
 		
 		JLabel txtCorreos = new JLabel("Correos:");
 		txtCorreos.setBounds(368, 225, 46, 14);
@@ -168,7 +174,21 @@ public class GestionCorreo extends JFrame {
 	
 	private void registrarEventos() {
 		
+		chkEmpleado.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				panelEmpleado.setVisible(chkEmpleado.isSelected());
+				/*if (chkEmpleado.isSelected()) {
+					panelEmpleado.setVisible(true);
+				} else {
+					panelEmpleado.setVisible(false);
+				}*/
+			}
+		});
 		
 		
+		
+				
+				
 	}
+	
 }
