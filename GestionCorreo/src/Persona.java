@@ -20,6 +20,8 @@ public class Persona {
 	}
 	//METODOS
 	public boolean esCorreoCorrecto() {
+		correo.matches("[a-zA-z0-9+_]+([.][a-zA-Z0-9+_]+)*[@]+");
+		
 		//QUE TENGA UNA ARROBA Y SOLO UNA (si la posicion de la primera y la ultima @ no son la misma -> false
 		/*String str="Hola a todos, hoy es lunes";
 		
@@ -33,6 +35,11 @@ public class Persona {
 		if(correo.indexOf('@')!=correo.lastIndexOf('@')) {
 			return false;
 		}	
+		
+		//que no contenga espacios
+		if(correo.contains(" ")) {
+			return false;
+		}
 		
 		//DESPUES DEL ULTIMO PUNTO (DESPUES DE LA @) AL MENOS 2 LETRAS (para el dominio): roberto.almi@almi.es
 		if(correo.lastIndexOf('.') < correo.lastIndexOf('@') && correo.lastIndexOf('.') + 3 >= correo.length()) {
@@ -53,7 +60,7 @@ public class Persona {
 		
 		//ENTRE LA ARROBA Y EL PUNTO AL MENOS DOS LETRAS
 		
-		return false;
+		return true;
 	}
 	
 	//GETTERS Y SETTERS

@@ -1,4 +1,3 @@
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +8,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.DefaultListModel;
@@ -174,6 +175,14 @@ public class GestionCorreo extends JFrame {
 		JLabel txtWebs = new JLabel("Webs:");
 		txtWebs.setBounds(652, 225, 86, 14);
 		contentPane.add(txtWebs);
+		
+		JButton btnGuardarBD = new JButton("Guardar BD");
+		btnGuardarBD.setBounds(818, 271, 89, 23);
+		contentPane.add(btnGuardarBD);
+		
+		JButton btnCargarBD = new JButton("Cargar BD");
+		btnCargarBD.setBounds(818, 321, 89, 23);
+		contentPane.add(btnCargarBD);
 
 		registrarEventos();
 		arrayPersonas = new ArrayList<Persona>();
@@ -182,6 +191,23 @@ public class GestionCorreo extends JFrame {
 	}//FIN DEL CONSTRUCTOR
 	
 	private void registrarEventos() {
+		lstNombres.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				seleccionarListas(lstNombres.getSelectedIndex());
+				//Cuando selecciono un elemento del JList de nombres, se seleccionan los mismos indices en los otros dos JList
+				
+				if(!e.getValueIsAdjusting()) {
+					int index = lstNombres.getSelectedIndex();
+					lstCorreos.setSelectedIndex(index);
+					listWebs.setSelectedIndex(index);
+				}
+				
+			}
+		});
+		
 		chkEmpleado.addItemListener(new ItemListener() {
 			
 			@Override
@@ -202,20 +228,29 @@ public class GestionCorreo extends JFrame {
 		});
 		
 		btnAdd.addActionListener(new ActionListener() {
-			Persona per;
-			Empleado emp;
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Persona per;
+				Empleado emp;
+				
 				//EL NOMBRE ES OBLIGATORIO
 				if(txtNombre.getText().trim().equals("")) {
 					txtNombre.requestFocus();
 					return; 
 				}
+				per = new Persona( txtNombre.getText().trim(),
+						   txtCorreo.getText().trim(),
+						   txtWeb.getText().trim() );
+				
+				if(!per.esCorreoCorrecto()) {
+					txtCorreo.requestFocus();
+					txtCorreo.selectAll();
+					return;
+				}
+				
 				//CREAR UN OBJETO DE CLASE PERSONA CON LOS DATOS DE LOS JTextField Y AÑADIRLO AL ARRAYLIST
-					per = new Persona( txtNombre.getText().trim(),
-									   txtCorreo.getText().trim(),
-									   txtWeb.getText().trim() );
+					
 					if(chkEmpleado.isSelected()) {	
 						try {
 							emp = new Empleado( per,
@@ -261,6 +296,9 @@ public class GestionCorreo extends JFrame {
 			
 				
 	}
+
+	protected void seleccionarListas(int selectedIndex) {
+		// TODO Auto-generated method stub
 		
-	
+	}
 }
