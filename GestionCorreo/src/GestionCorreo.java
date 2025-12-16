@@ -1,4 +1,10 @@
+import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,8 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+
 
 public class GestionCorreo extends JFrame {
 
@@ -20,7 +25,7 @@ public class GestionCorreo extends JFrame {
 	private JTextField txtNombre;
 	private JTextField txtCorreo;
 	private JTextField txtWeb;
-	private JButton btnADD;
+	private JButton btnAdd;
 	private JTextField txtEdad;
 	private JTextField txtDireccion;
 	private JTextField txtTelefono;
@@ -31,6 +36,7 @@ public class GestionCorreo extends JFrame {
 
 	private DefaultListModel<String> modeloNombres, modeloCorreos, modeloWebs;
 	private JPanel panelEmpleado;
+	private ArrayList<Persona> arrayPersonas = new ArrayList<Persona>();
 
 	/**
 	 * Launch the application.
@@ -87,11 +93,12 @@ public class GestionCorreo extends JFrame {
 		txtWeb.setBounds(134, 148, 86, 20);
 		contentPane.add(txtWeb);
 		
-		btnADD = new JButton("Añadir");
-		btnADD.setBounds(376, 147, 89, 23);
-		contentPane.add(btnADD);
+		btnAdd = new JButton("Añadir");
+		btnAdd.setBounds(376, 147, 89, 23);
+		contentPane.add(btnAdd);
 		
 		chkEmpleado = new JCheckBox("Empleado");
+		chkEmpleado.setSelected(true);
 		chkEmpleado.setBounds(368, 91, 97, 23);
 		contentPane.add(chkEmpleado);
 		
@@ -139,7 +146,7 @@ public class GestionCorreo extends JFrame {
 		lstNombres.setModel(modeloNombres);
 		
 		JLabel txtNombres = new JLabel("Nombres:");
-		txtNombres.setBounds(86, 225, 46, 14);
+		txtNombres.setBounds(86, 225, 86, 14);
 		contentPane.add(txtNombres);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -161,34 +168,99 @@ public class GestionCorreo extends JFrame {
 		listWebs.setModel(modeloWebs);
 		
 		JLabel txtCorreos = new JLabel("Correos:");
-		txtCorreos.setBounds(368, 225, 46, 14);
+		txtCorreos.setBounds(368, 225, 97, 14);
 		contentPane.add(txtCorreos);
 		
 		JLabel txtWebs = new JLabel("Webs:");
-		txtWebs.setBounds(652, 225, 46, 14);
+		txtWebs.setBounds(652, 225, 86, 14);
 		contentPane.add(txtWebs);
 
 		registrarEventos();
+		arrayPersonas = new ArrayList<Persona>();
+		
 		
 	}//FIN DEL CONSTRUCTOR
 	
 	private void registrarEventos() {
-		
 		chkEmpleado.addItemListener(new ItemListener() {
+			
+			@Override
 			public void itemStateChanged(ItemEvent e) {
+				
 				panelEmpleado.setVisible(chkEmpleado.isSelected());
-				/*if (chkEmpleado.isSelected()) {
+				
+				/*if(chkEmpleado.isSelected()) {
 					panelEmpleado.setVisible(true);
-				} else {
+				}else {
 					panelEmpleado.setVisible(false);
 				}*/
+				/*si está marcado
+					pongo visible el panel
+				sino 
+					pongo invisible el panel*/
 			}
 		});
 		
-		
-		
+		btnAdd.addActionListener(new ActionListener() {
+			Persona per;
+			Empleado emp;
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//EL NOMBRE ES OBLIGATORIO
+				if(txtNombre.getText().trim().equals("")) {
+					txtNombre.requestFocus();
+					return; 
+				}
+				//CREAR UN OBJETO DE CLASE PERSONA CON LOS DATOS DE LOS JTextField Y AÑADIRLO AL ARRAYLIST
+					per = new Persona( txtNombre.getText().trim(),
+									   txtCorreo.getText().trim(),
+									   txtWeb.getText().trim() );
+					if(chkEmpleado.isSelected()) {	
+						try {
+							emp = new Empleado( per,
+												Integer.parseInt( txtEdad.getText().trim() ),
+												txtDireccion.getText().trim(),
+												txtTelefono.getText().trim() );
+							arrayPersonas.add(emp);
+						}catch(NumberFormatException nfe) {
+							txtEdad.requestFocus();
+							txtEdad.selectAll();
+							return;
+						}
+					}else {//Que es una persona normal
+						arrayPersonas.add(per); 
+					}
 				
+				
+				//AÑADIR LOS DATOS DE LOS JTEXTFIELD (O DEL OBJETO PERSONA) AL JList
+				modeloNombres.addElement( per.getNombre() );
+				if (per.getCorreo().equals("")) {
+					modeloCorreos.addElement(" ");
+				} else {
+					modeloCorreos.addElement( per.getCorreo() );
+				}
+				if (per.getWeb().equals("")) {
+					modeloWebs.addElement(" ");
+				} else {
+					modeloWebs.addElement( per.getWeb() );}
+				txtNombre.setText("");
+				txtCorreo.setText("");
+				txtWeb.setText("");
+				txtEdad.setText("");
+				txtDireccion.setText("");
+				txtTelefono.setText("");
+				txtNombre.requestFocus();
+				
+			
+				
+				
+			}
+		});
+			
+			
 				
 	}
+		
 	
 }

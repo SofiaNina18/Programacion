@@ -19,6 +19,42 @@ public class Persona {
 		this.web = web;
 	}
 	//METODOS
+	public boolean esCorreoCorrecto() {
+		//QUE TENGA UNA ARROBA Y SOLO UNA (si la posicion de la primera y la ultima @ no son la misma -> false
+		/*String str="Hola a todos, hoy es lunes";
+		
+		str.charAt(3);
+		str.indexOf('1');
+		str.lastIndexOf('1');
+		
+		str.indexOf(65);
+		str.endsWith(".png");*/
+		
+		if(correo.indexOf('@')!=correo.lastIndexOf('@')) {
+			return false;
+		}	
+		
+		//DESPUES DEL ULTIMO PUNTO (DESPUES DE LA @) AL MENOS 2 LETRAS (para el dominio): roberto.almi@almi.es
+		if(correo.lastIndexOf('.') < correo.lastIndexOf('@') && correo.lastIndexOf('.') + 3 >= correo.length()) {
+			return false;
+		}
+		
+		//QUE TENGA UN PUNTO DESPUES DE LA ARROBA AL MENOS LETRAS
+		
+		if(correo.lastIndexOf('.') < correo.indexOf('@') + 3) {
+			return false;
+		}
+		
+		
+		//ANTES DE LA ARROBA AL MENOS DOS LETRAS
+		if(correo.indexOf('@') < 2) {
+			return false;
+		}
+		
+		//ENTRE LA ARROBA Y EL PUNTO AL MENOS DOS LETRAS
+		
+		return false;
+	}
 	
 	//GETTERS Y SETTERS
 	public int getId() {
