@@ -1,9 +1,27 @@
+/*Crear Base de Datos:
+	BD: GestionCorreo
+	Tablas:
+		Personas
+		Empleados
+
+Incluir Driver en el proyecto
+   Crear clase:
+   		Base de Datos
+   			Conexion
+   			Métodos para obtener datos
+ */
+
+
 
 public class Persona {
 	
+	protected static final int NUEVO = 0;
+	protected static final int GUARDADO = 0;
 	//DATOS
 	private int id;
 	private String nombre, correo, web;
+	private int estado;
+	
 	
 	//CONSTRUCTOR
 	public Persona() {
@@ -21,7 +39,10 @@ public class Persona {
 	//METODOS
 	public boolean esCorreoCorrecto() {
 		correo.matches("[a-zA-z0-9+_]+([.][a-zA-Z0-9+_]+)*[@]+");
-		
+		correo.matches("[a-zA-Z0-9+_]+([.][a-zA-Z0-9+_]+)*@[a-zA-Z0-9+_]+([.][a-zA-Z0-9+_]+)*[.][a-zA-Z]{2,}");
+						 //robert12          (.rober1)     @rober12.roter                     .uk
+		return true;
+	}
 		//QUE TENGA UNA ARROBA Y SOLO UNA (si la posicion de la primera y la ultima @ no son la misma -> false
 		/*String str="Hola a todos, hoy es lunes";
 		
@@ -31,10 +52,10 @@ public class Persona {
 		
 		str.indexOf(65);
 		str.endsWith(".png");*/
-		
+		/*	
 		if(correo.indexOf('@')!=correo.lastIndexOf('@')) {
 			return false;
-		}	
+		}
 		
 		//que no contenga espacios
 		if(correo.contains(" ")) {
@@ -62,7 +83,7 @@ public class Persona {
 		
 		return true;
 	}
-	
+	*/
 	//GETTERS Y SETTERS
 	public int getId() {
 		return id;
@@ -89,6 +110,11 @@ public class Persona {
 		this.web = web;
 	}
 	
-	
+	public int getEstado() {
+		return estado;
+	}
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
 	
 }

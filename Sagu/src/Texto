@@ -1,0 +1,11 @@
+Crear Base de Datos:
+	BD: GestionCorreo
+	Tablas:
+		Personas
+		Empleados
+
+Incluir Driver en el proyecto
+   Crear clase:
+   		Base de Datos
+   			Conexion
+   			Métodos para obtener datos

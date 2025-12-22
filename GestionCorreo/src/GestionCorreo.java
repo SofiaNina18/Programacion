@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -16,6 +17,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 
@@ -37,7 +39,13 @@ public class GestionCorreo extends JFrame {
 
 	private DefaultListModel<String> modeloNombres, modeloCorreos, modeloWebs;
 	private JPanel panelEmpleado;
-	private ArrayList<Persona> arrayPersonas = new ArrayList<Persona>();
+	private ArrayList<Persona> arrayPersonas;
+	private JButton btnGuardarBD;
+	private JButton btnCargarBD;
+	
+	private BaseDatos bd;
+	private JButton btnEnviarMail;
+	private EnviarMail enviarMail;
 
 	/**
 	 * Launch the application.
@@ -61,7 +69,7 @@ public class GestionCorreo extends JFrame {
 	public GestionCorreo() {
 		setTitle("GestionCorreosAlmi");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 928, 651);
+		setBounds(100, 100, 974, 651);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -95,16 +103,16 @@ public class GestionCorreo extends JFrame {
 		contentPane.add(txtWeb);
 		
 		btnAdd = new JButton("Añadir");
-		btnAdd.setBounds(376, 147, 89, 23);
+		btnAdd.setBounds(403, 151, 89, 23);
 		contentPane.add(btnAdd);
 		
 		chkEmpleado = new JCheckBox("Empleado");
 		chkEmpleado.setSelected(true);
-		chkEmpleado.setBounds(368, 91, 97, 23);
+		chkEmpleado.setBounds(395, 95, 97, 23);
 		contentPane.add(chkEmpleado);
 		
 		panelEmpleado = new JPanel();
-		panelEmpleado.setBounds(527, 87, 316, 94);
+		panelEmpleado.setBounds(586, 77, 316, 94);
 		contentPane.add(panelEmpleado);
 		panelEmpleado.setLayout(null);
 		
@@ -176,21 +184,108 @@ public class GestionCorreo extends JFrame {
 		txtWebs.setBounds(652, 225, 86, 14);
 		contentPane.add(txtWebs);
 		
-		JButton btnGuardarBD = new JButton("Guardar BD");
-		btnGuardarBD.setBounds(818, 271, 89, 23);
+		btnGuardarBD = new JButton("Guardar BD");
+		btnGuardarBD.setBounds(818, 271, 110, 23);
 		contentPane.add(btnGuardarBD);
 		
-		JButton btnCargarBD = new JButton("Cargar BD");
-		btnCargarBD.setBounds(818, 321, 89, 23);
+		btnCargarBD = new JButton("Cargar BD");
+		btnCargarBD.setBounds(818, 321, 110, 23);
 		contentPane.add(btnCargarBD);
+		
+		btnEnviarMail = new JButton("Enviar Mail");
+		btnEnviarMail.setBounds(818, 376, 110, 23);
+		contentPane.add(btnEnviarMail);
 
 		registrarEventos();
 		arrayPersonas = new ArrayList<Persona>();
+		bd = new BaseDatos();
 		
 		
 	}//FIN DEL CONSTRUCTOR
 	
 	private void registrarEventos() {
+		btnEnviarMail.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				enviarMail = new EnviarMail(GestionCorreo.this);
+				enviarMail.setVisible(true);
+				
+				GestionCorreo.this.setVisible(false);
+				GestionCorreo.this.dispose();
+				
+			}
+		});
+		
+		btnGuardarBD.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//RECORRER EL ARRAYLIST Y GUARDAR CADA PERSONA EN LA BASE DE DATOS
+				for(Persona persona : arrayPersonas) {
+					if(persona.getEstado()==Persona.NUEVO) {
+						if(bd.insertar(persona)==1);
+						persona.setEstado(Persona.GUARDADO);
+					}
+				}
+				
+			}
+		});
+		
+		btnCargarBD.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        ResultSet rs;
+		        Persona per;
+		        Empleado emp;
+		        rs = bd.obtenerDatos(); 
+
+		        if(JOptionPane.showConfirmDialog(GestionCorreo.this, 
+		        		"Se van a cargar los datos. Los registros actuales no guardados se perderán. ¿Desea continuar?",
+		        		"Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+		            //Vaciar las 3 listas
+		        	modeloNombres.clear();
+		        	modeloCorreos.clear();
+		        	modeloWebs.clear();
+		        	try {
+		        		if(rs.first()) {
+		        			do {
+		        				per = new Persona(rs.getString("nombre"),
+		        							rs.getString("correo"),
+		        							rs.getString("web"));
+		        				per.setEstado(Persona.GUARDADO);
+		        				per.setId(rs.getInt("id"));
+		        				if(rs.getBoolean("esEmpleado")) {
+		        					emp = new Empleado(per,
+		        							rs.getInt("edad"),
+		        							rs.getString("direccion"),
+		        							rs.getString("telefono"));
+		        					emp.setEstado(Persona.GUARDADO);
+		        					arrayPersonas.add(emp);
+		        				}else {
+		        					arrayPersonas.add(per);
+		        				}
+		        				modeloNombres.addElement(per.getNombre());
+		        				if(per.getCorreo().equals("")) {
+		        					modeloCorreos.addElement(" ");
+		        					}else {
+		        						modeloCorreos.addElement(per.getCorreo());
+		        						
+		        					}
+		        				
+		        	}
+		        			while(rs.next());
+		        		}
+		        		}catch(Exception ex) {
+		        			ex.printStackTrace();
+		        			
+		        			}
+		            }
+		        }
+		    });
+		        
+		        		
+		
 		lstNombres.addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
@@ -258,6 +353,7 @@ public class GestionCorreo extends JFrame {
 												txtDireccion.getText().trim(),
 												txtTelefono.getText().trim() );
 							arrayPersonas.add(emp);
+							
 						}catch(NumberFormatException nfe) {
 							txtEdad.requestFocus();
 							txtEdad.selectAll();
