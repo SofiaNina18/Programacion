@@ -7,10 +7,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.JTextArea;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class EnviarMail extends JFrame {
 
@@ -21,9 +25,11 @@ public class EnviarMail extends JFrame {
 	private JTextField txtAsunto;
 	private JTextArea txtMensaje;
 	private JButton btnEnviar;
-	private JList lstMails;
+	private JList<String> lstMails;
 	private JButton btnVolver;
-	private JButton btnNewButton;
+	private JButton btnResize;
+	private DefaultListModel<String> modeloMails;
+	private Timer reloj;
 
 	private GestionCorreo gestionCorreo;
 	
@@ -31,11 +37,12 @@ public class EnviarMail extends JFrame {
 	 * Create the frame.
 	 */
 	public EnviarMail(GestionCorreo gestionCorreo) {
+		setResizable(false);
 		this.gestionCorreo=gestionCorreo;
 		
 		setTitle("EnviarMail");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 881, 484);
+		setBounds(100, 100, 901, 484);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -46,6 +53,7 @@ public class EnviarMail extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		txtPara = new JTextField();
+		txtPara.setEditable(false);
 		txtPara.setBounds(104, 25, 342, 20);
 		contentPane.add(txtPara);
 		txtPara.setColumns(10);
@@ -55,6 +63,7 @@ public class EnviarMail extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		txtCC = new JTextField();
+		txtCC.setEditable(false);
 		txtCC.setBounds(104, 62, 424, 20);
 		contentPane.add(txtCC);
 		txtCC.setColumns(10);
@@ -85,16 +94,23 @@ public class EnviarMail extends JFrame {
 		btnVolver.setBounds(538, 263, 89, 23);
 		contentPane.add(btnVolver);
 		
-		btnNewButton = new JButton(">");
-		btnNewButton.setBounds(545, 24, 68, 55);
-		contentPane.add(btnNewButton);
+		btnResize = new JButton(">");
+		btnResize.setBounds(545, 24, 68, 55);
+		contentPane.add(btnResize);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(652, 28, 190, 269);
 		contentPane.add(scrollPane);
 		
-		lstMails = new JList();
+		lstMails = new JList<String>();
+		lstMails.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		scrollPane.setViewportView(lstMails);
+		modeloMails = new DefaultListModel<String>();
+		lstMails.setModel(modeloMails);
 		
 		registrarEventos();
 		
@@ -107,10 +123,65 @@ public class EnviarMail extends JFrame {
 			txtPara.setText(gestionCorreo.getLstCorreos().getSelectedValue());
 			
 		}
+		for (int i = 0; i < gestionCorreo.getLstCorreos().getModel().getSize(); i++) {
+			modeloMails.addElement(gestionCorreo.getLstCorreos().getModel().getElementAt(i));
+		}
 	}
 
 
 	private void registrarEventos() {
+		
+		lstMails.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				if(e.getClickCount()==2) {
+					if(lstMails.getSelectedIndex()>=0) {
+						if(txtPara.getText().isEmpty()) {
+							txtPara.setText(lstMails.getSelectedValue());
+						}else {
+							txtPara.setText(txtPara.getText()+", "+lstMails.getSelectedValue());
+							
+						}
+						modeloMails.remove(lstMails.getSelectedIndex());
+					}
+				}
+			}
+		});
+		
+		reloj = new Timer(25, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				// TODO Auto-generated method stub
+				
+				if(btnResize.getText().equals(">")) {
+					setSize(getWidth()+5, getHeight());
+					if(getWidth()>=900) {
+						reloj.stop();
+						btnResize.setText("<");
+					}
+					}else {
+						setSize(getWidth()-5, getHeight());
+						if(getWidth()<=650) {
+							reloj.stop();
+							btnResize.setText(">");
+						
+					}
+				}
+				}
+			});
+		btnResize.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				reloj.start();
+			}
+		});
+		
+		
 		btnVolver.addActionListener(new ActionListener() {
 			
 			@Override
