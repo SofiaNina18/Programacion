@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -17,88 +17,100 @@ public class EnviarMail extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtPara;
-	private JLabel j;
 	private JTextField txtCC;
 	private JTextField txtAsunto;
 	private JTextArea txtMensaje;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
+	private JButton btnEnviar;
+	private JList lstMails;
 	private JButton btnVolver;
-	private JList list;
-	
-	private GestionCorreo gestionCorreo;
+	private JButton btnNewButton;
 
+	private GestionCorreo gestionCorreo;
 	
+	/**
+	 * Create the frame.
+	 */
 	public EnviarMail(GestionCorreo gestionCorreo) {
-		this.gestionCorreo = gestionCorreo;
+		this.gestionCorreo=gestionCorreo;
 		
 		setTitle("EnviarMail");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 995, 507);
+		setBounds(100, 100, 881, 484);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JLabel lblNewLabel = new JLabel("Para:");
+		lblNewLabel.setBounds(42, 28, 46, 14);
+		contentPane.add(lblNewLabel);
+		
 		txtPara = new JTextField();
-		txtPara.setBounds(135, 29, 445, 20);
+		txtPara.setBounds(104, 25, 342, 20);
 		contentPane.add(txtPara);
 		txtPara.setColumns(10);
 		
-		j = new JLabel("Para: ");
-		j.setBounds(41, 32, 67, 14);
-		contentPane.add(j);
-		
-		JLabel lblCc = new JLabel("CC: ");
-		lblCc.setBounds(41, 73, 67, 14);
-		contentPane.add(lblCc);
-		
-		JLabel lblAsunto = new JLabel("Asunto: ");
-		lblAsunto.setBounds(41, 122, 67, 14);
-		contentPane.add(lblAsunto);
+		JLabel lblNewLabel_1 = new JLabel("CC:");
+		lblNewLabel_1.setBounds(42, 65, 46, 14);
+		contentPane.add(lblNewLabel_1);
 		
 		txtCC = new JTextField();
-		txtCC.setColumns(10);
-		txtCC.setBounds(135, 70, 445, 20);
+		txtCC.setBounds(104, 62, 424, 20);
 		contentPane.add(txtCC);
+		txtCC.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Asunto:");
+		lblNewLabel_2.setBounds(42, 96, 46, 14);
+		contentPane.add(lblNewLabel_2);
 		
 		txtAsunto = new JTextField();
-		txtAsunto.setColumns(10);
-		txtAsunto.setBounds(135, 119, 445, 20);
+		txtAsunto.setBounds(104, 93, 424, 20);
 		contentPane.add(txtAsunto);
+		txtAsunto.setColumns(10);
 		
-		JLabel lblMensaje = new JLabel("Mensaje:");
-		lblMensaje.setBounds(41, 165, 67, 14);
-		contentPane.add(lblMensaje);
+		JLabel lblNewLabel_3 = new JLabel("Mensaje:");
+		lblNewLabel_3.setBounds(42, 151, 46, 14);
+		contentPane.add(lblNewLabel_3);
 		
 		txtMensaje = new JTextArea();
-		txtMensaje.setBounds(135, 165, 445, 292);
+		txtMensaje.setLineWrap(true);
+		txtMensaje.setBounds(104, 146, 424, 242);
 		contentPane.add(txtMensaje);
 		
-		btnNewButton = new JButton("Enviar");
-		btnNewButton.setBounds(666, 192, 89, 23);
-		contentPane.add(btnNewButton);
-		
-		btnNewButton_1 = new JButton(">");
-		btnNewButton_1.setBounds(603, 28, 89, 59);
-		contentPane.add(btnNewButton_1);
+		btnEnviar = new JButton("Enviar");
+		btnEnviar.setBounds(538, 211, 89, 23);
+		contentPane.add(btnEnviar);
 		
 		btnVolver = new JButton("Volver");
-		btnVolver.setBounds(666, 244, 89, 23);
+		btnVolver.setBounds(538, 263, 89, 23);
 		contentPane.add(btnVolver);
 		
+		btnNewButton = new JButton(">");
+		btnNewButton.setBounds(545, 24, 68, 55);
+		contentPane.add(btnNewButton);
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(785, 29, 184, 362);
+		scrollPane.setBounds(652, 28, 190, 269);
 		contentPane.add(scrollPane);
 		
-		list = new JList();
-		scrollPane.setViewportView(list);
+		lstMails = new JList();
+		scrollPane.setViewportView(lstMails);
 		
 		registrarEventos();
+		
+		
 
 	}//FIN DEL CONSTRUCTOR
+	
+	public void recibirDatos() {
+		if(gestionCorreo.getLstCorreos().getSelectedIndex()!=-1) {
+			txtPara.setText(gestionCorreo.getLstCorreos().getSelectedValue());
+			
+		}
+	}
+
+
 	private void registrarEventos() {
-		// TODO Auto-generated method stub
 		btnVolver.addActionListener(new ActionListener() {
 			
 			@Override
@@ -106,9 +118,15 @@ public class EnviarMail extends JFrame {
 				// TODO Auto-generated method stub
 				gestionCorreo.setVisible(true);
 				EnviarMail.this.dispose();
+				
 			}
 		});
 	}
-	
-	
 }
+
+
+
+
+
+
+

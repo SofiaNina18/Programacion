@@ -1,33 +1,33 @@
+import javax.swing.JButton;
 
-public class Empleado extends Persona { //HERENCIA DE LA CLASE PERSONA
-
+public class Empleado extends Persona {
+	//DATOS
 	private int edad;
 	private String direccion, telefono;
 	
 	//CONSTRUCTORES
 	public Empleado() {
-		super(); //LLAMADA AL CONSTRUCTOR DE LA CLASE PADRE (PERSONA)
-		edad = -1;
-		direccion = "";
-		telefono = "";
+		super();
+		edad=-1;
+		this.direccion="";
+		this.telefono="";
 	}
 	
-	//MÉTODOS
 	public Empleado(String nombre, String correo, String web, int edad, String direccion, String telefono) {
-		super(nombre ,correo, web);
-		this.edad = edad;
-		this.direccion = direccion;
-		this.telefono = telefono;
+		super(nombre, correo, web);
+		this.edad=edad;
+		this.direccion=direccion;
+		this.telefono=telefono;
 	}
 	
 	public Empleado(Persona per, int edad, String direccion, String telefono) {
-		super(per.getNombre(), per.getCorreo(), per.getWeb()); //LLAMADA AL CONSTRUCTOR DE LA CLASE PADRE (PERSONA)
-		this.edad = edad;
-		this.direccion = direccion;
-		this.telefono = telefono;
+		super(per.getNombre(), per.getCorreo(), per.getWeb());
+		this.edad=edad;
+		this.direccion=direccion;
+		this.telefono=telefono;
 	}
 
-	//GETTERS Y SETTERS
+	//GETTERS y SETTERS 
 	public int getEdad() {
 		return edad;
 	}
@@ -51,8 +51,15 @@ public class Empleado extends Persona { //HERENCIA DE LA CLASE PERSONA
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-
 	
 	
 	
 }
+
+
+
+
+
+
+
+

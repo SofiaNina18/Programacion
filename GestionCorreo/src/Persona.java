@@ -1,120 +1,105 @@
-/*Crear Base de Datos:
-	BD: GestionCorreo
-	Tablas:
-		Personas
-		Empleados
-
-Incluir Driver en el proyecto
-   Crear clase:
-   		Base de Datos
-   			Conexion
-   			Métodos para obtener datos
- */
-
-
 
 public class Persona {
-	
-	protected static final int NUEVO = 0;
-	protected static final int GUARDADO = 0;
+	public static final int GUARDADO=0;
+	public static final int MODIFICADO=1;
+	public static final int NUEVO=2;
 	//DATOS
 	private int id;
 	private String nombre, correo, web;
 	private int estado;
 	
-	
-	//CONSTRUCTOR
+	//CONSTRUCTOR/ES
 	public Persona() {
-		id = -1;
-		nombre = "";
-		correo = "";
-		web = "";
+		id=-1;
+		nombre="";
+		correo="";
+		web="";
 	}
+	
 	public Persona(String nombre, String correo, String web) {
-		id = -1;
-		this.nombre = nombre;
-		this.correo = correo;
-		this.web = web;
+		id=-1;
+		this.nombre=nombre;
+		this.correo=correo;
+		this.web=web;
+		this.estado=NUEVO;
 	}
+
 	//METODOS
 	public boolean esCorreoCorrecto() {
-		correo.matches("[a-zA-z0-9+_]+([.][a-zA-Z0-9+_]+)*[@]+");
-		correo.matches("[a-zA-Z0-9+_]+([.][a-zA-Z0-9+_]+)*@[a-zA-Z0-9+_]+([.][a-zA-Z0-9+_]+)*[.][a-zA-Z]{2,}");
-						 //robert12          (.rober1)     @rober12.roter                     .uk
-		return true;
-	}
-		//QUE TENGA UNA ARROBA Y SOLO UNA (si la posicion de la primera y la ultima @ no son la misma -> false
-		/*String str="Hola a todos, hoy es lunes";
-		
-		str.charAt(3);
-		str.indexOf('1');
-		str.lastIndexOf('1');
-		
-		str.indexOf(65);
-		str.endsWith(".png");*/
-		/*	
-		if(correo.indexOf('@')!=correo.lastIndexOf('@')) {
+		//correo.matches("[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@]+");	
+		if(!correo.matches("[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,}")) {
+						//	  rober12     (.rober1)          @rober12.rober                   .uk
 			return false;
+		} else {
+			return true;
 		}
-		
-		//que no contenga espacios
+		/*
+		//QUE NO CONTENGA UN ESPACIO 
 		if(correo.contains(" ")) {
 			return false;
 		}
-		
-		//DESPUES DEL ULTIMO PUNTO (DESPUES DE LA @) AL MENOS 2 LETRAS (para el dominio): roberto.almi@almi.es
-		if(correo.lastIndexOf('.') < correo.lastIndexOf('@') && correo.lastIndexOf('.') + 3 >= correo.length()) {
+		//QUE TENGA UNA ARROBA Y SOLO UNA (si la posición de la 1ª y la última @ no son la misma -> false)
+		if(correo.indexOf("@")!=correo.lastIndexOf("@")) {
 			return false;
 		}
-		
-		//QUE TENGA UN PUNTO DESPUES DE LA ARROBA AL MENOS LETRAS
-		
-		if(correo.lastIndexOf('.') < correo.indexOf('@') + 3) {
+		//DESPUÉS DEL ÚLTIMO PUNTO (después de la @) AL MENOS 2 LETRAS (para el dominio):  roberto.almi@almi.es
+		if(correo.lastIndexOf(".")<correo.lastIndexOf("@") && correo.lastIndexOf(".")+3>correo.length()) {
 			return false;
 		}
-		
 		
 		//ANTES DE LA ARROBA AL MENOS DOS LETRAS
-		if(correo.indexOf('@') < 2) {
+		if(correo.indexOf("@")<2) {
 			return false;
 		}
-		
-		//ENTRE LA ARROBA Y EL PUNTO AL MENOS DOS LETRAS
-		
-		return true;
+		//ENTRE LA ARROBA Y EL "." AL MENOS DOS LETRAS
+		if(correo.lastIndexOf(".")<correo.lastIndexOf("@")+3 ) {
+			return false;
+		}
+		return true;*/
 	}
-	*/
-	//GETTERS Y SETTERS
+	
+	
+	
+	//GETTERS y SETTERS
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 	public String getCorreo() {
 		return correo;
 	}
+
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
+
 	public String getWeb() {
 		return web;
 	}
+
 	public void setWeb(String web) {
 		this.web = web;
 	}
-	
+
 	public int getEstado() {
 		return estado;
 	}
+
 	public void setEstado(int estado) {
 		this.estado = estado;
 	}
+	
 	
 }
