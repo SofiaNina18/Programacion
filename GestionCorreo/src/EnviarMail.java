@@ -131,20 +131,14 @@ public class EnviarMail extends JFrame {
 
 	private void registrarEventos() {
 		
+		
 		lstMails.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
 				if(e.getClickCount()==2) {
-					if(lstMails.getSelectedIndex()>=0) {
-						if(txtPara.getText().isEmpty()) {
-							txtPara.setText(lstMails.getSelectedValue());
-						}else {
-							txtPara.setText(txtPara.getText()+", "+lstMails.getSelectedValue());
-							
-						}
-						modeloMails.remove(lstMails.getSelectedIndex());
-					}
+					String emailSeleccionado = lstMails.getSelectedValue();
+					txtPara.setText(emailSeleccionado);
 				}
 			}
 		});

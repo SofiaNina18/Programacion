@@ -3,6 +3,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 public class BaseDatos {
 	//DATOS
@@ -19,6 +21,56 @@ public class BaseDatos {
 			cn=null;
 		} 
 	}
+	
+	public int guardarMail(String asunto, String texto) {
+		String strSent;
+		ResultSet rs;
+		PreparedStatement sentencia;
+		strSent="INSERT INTO mails(asunto, texto) VALUES (?, ?)";
+		try {
+			sentencia=cn.prepareStatement(strSent);
+			sentencia.setString(1, asunto);
+			sentencia.setString(2, texto);
+			sentencia.executeUpdate();
+			strSent="SELECT MAX(idMail) FROM mails";
+			sentencia=cn.prepareStatement(strSent);
+			rs=sentencia.executeQuery();
+			return rs.getInt(1);
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public int guardarEnvios(int idMail, String strMails) {
+		String strSent;
+		PreparedStatement sentencia;
+		ResultSet rs;
+		int idPersona;
+		String [] mails;
+		mails=strMails.split(", ");
+		
+		for (String mail : mails) {
+			try {
+				strSent="SELECT id FROM personas WHERE correo=?";
+				sentencia=cn.prepareStatement(strSent);
+				sentencia.setString(1, mail);
+				rs=sentencia.executeQuery();
+				idPersona=rs.getInt("id");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+			
+		}
+		return mails.length;
+		}
+	
 
 	//ACCIONES SOBRE LA BASE DE DATOS
 	public int insertar(Persona per) {

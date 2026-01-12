@@ -40,8 +40,6 @@ public class GestionCorreo extends JFrame {
 	private DefaultListModel<String> modeloNombres, modeloCorreos, modeloWebs;
 	private JPanel panelEmpleado;
 	private ArrayList<Persona> arrayPersonas;
-	
-
 	private JButton btnCargarBD;
 	private JButton btnGuardarBD;
 
@@ -212,7 +210,10 @@ public class GestionCorreo extends JFrame {
 				// Crear una nueva instancia de la clase EnviarMail y ponerla visible
 				enviarMail=new EnviarMail(GestionCorreo.this);
 				enviarMail.setVisible(true);
-				GestionCorreo.this.setVisible(false);
+				enviarMail.setBounds(100, 100, 650, 484);
+				//GestionCorreo.this.setVisible(false);
+				enviarMail.recibirDatos();
+				
 			}
 		});
 		
@@ -382,7 +383,7 @@ public class GestionCorreo extends JFrame {
 		lstCorreos.setSelectedIndex(selectedIndex);
 		lstWebs.setSelectedIndex(selectedIndex);
 	}
-	
+
 	public JList<String> getLstNombres() {
 		return lstNombres;
 	}
