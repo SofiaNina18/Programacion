@@ -5,12 +5,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
-import java.awt.Color;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Ahorcado extends JFrame {
 
@@ -23,10 +25,11 @@ public class Ahorcado extends JFrame {
 	private int numFallos;
 	private Fichero fichero;
 	
-	
 	private Teclado teclado;
 	private AreaDibujo areaDibujo;
 	private JPanel panelCentro;
+	
+	private EventosAhorcado eventosAhorcado;
 	
 
 	/**
@@ -49,6 +52,7 @@ public class Ahorcado extends JFrame {
 	 * Create the frame.
 	 */
 	public Ahorcado() {
+		setTitle("AlmiAhorcado");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 611, 497);
@@ -66,6 +70,7 @@ public class Ahorcado extends JFrame {
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
 		btnNueva = new JButton("Nueva Palabra");
+		btnNueva.setEnabled(false);
 		panelSur.add(btnNueva);
 		
 		btnSalir = new JButton("Salir");
@@ -75,34 +80,103 @@ public class Ahorcado extends JFrame {
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		teclado = new Teclado();
+		teclado=new Teclado(this);
 		panelCentro.add(teclado);
 		
-		areaDibujo = new AreaDibujo();
+		areaDibujo=new AreaDibujo(this);
 		panelCentro.add(areaDibujo);
+		
+		eventosAhorcado=new EventosAhorcado(this);
 		
 		fichero=new Fichero();
 		arrayPalabras=fichero.cargarPalabras("palabras.txt");
 		
-		for (String string : arrayPalabras) {
-			System.out.println(string);
-		}
-	}//FIN CONSTRUCTOR
+		elegirPalabra();
+	}
 
-	public final ArrayList<String> getArrayPalabras() {
+	public void elegirPalabra() {
+		Random r;
+		String palabra;
+		int posicion;
+		if(arrayPalabras.size()==0) {
+			JOptionPane.showMessageDialog(null, "No quedan palabras");
+			return;
+		}
+		//ELIGE UNA PALABRA AL AZAR DEL ARRAYLIST
+		r=new Random();
+		posicion=r.nextInt(arrayPalabras.size());
+		palabra=arrayPalabras.get(posicion);
+		//LA ELIMINA DEL ARRAYLIST
+		arrayPalabras.remove(posicion);
+		//REINICIA LOS BOTONES (COLOR Y ENABLED)
+		teclado.estadoTeclado(true);
+		//REINICIA EL CANVAS (REINICIAR FALLOS Y REPAINT)
+		numFallos=0;
+		areaDibujo.repaint();
+		//PONE TANTOS GUIONES (SEGUIDOS DE UN ESPACIO) COMO LETRAS TENGA LA PALABRA
+		lblPalabra.setText("");
+		for(int i=0;i<palabra.length();i++) {
+			lblPalabra.setText(lblPalabra.getText()+"_ ");
+		}
+		teclado.setPalabra(palabra);
+	}
+	
+	
+	//GETTERS / SETTERS
+	public ArrayList<String> getArrayPalabras() {
 		return arrayPalabras;
 	}
 
-	public final void setArrayPalabras(ArrayList<String> arrayPalabras) {
+	public void setArrayPalabras(ArrayList<String> arrayPalabras) {
 		this.arrayPalabras = arrayPalabras;
 	}
 
-	public final int getNumFallos() {
+	public int getNumFallos() {
 		return numFallos;
 	}
 
-	public final void setNumFallos(int numFallos) {
+	public void setNumFallos(int numFallos) {
 		this.numFallos = numFallos;
+	}
+
+	public JLabel getLblPalabra() {
+		return lblPalabra;
+	}
+
+	public void setLblPalabra(JLabel lblPalabra) {
+		this.lblPalabra = lblPalabra;
+	}
+
+	public JButton getBtnNueva() {
+		return btnNueva;
+	}
+
+	public void setBtnNueva(JButton btnNueva) {
+		this.btnNueva = btnNueva;
+	}
+
+	public JButton getBtnSalir() {
+		return btnSalir;
+	}
+
+	public void setBtnSalir(JButton btnSalir) {
+		this.btnSalir = btnSalir;
+	}
+
+	public Teclado getTeclado() {
+		return teclado;
+	}
+
+	public void setTeclado(Teclado teclado) {
+		this.teclado = teclado;
+	}
+
+	public AreaDibujo getAreaDibujo() {
+		return areaDibujo;
+	}
+
+	public void setAreaDibujo(AreaDibujo areaDibujo) {
+		this.areaDibujo = areaDibujo;
 	}
 
 }

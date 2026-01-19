@@ -3,10 +3,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class AreaDibujo extends Canvas {
+	private Ahorcado ahorcado;
 
-	public AreaDibujo() {
+	public AreaDibujo(Ahorcado ahorcado) {
+		this.ahorcado=ahorcado;
 		this.setBackground(Color.CYAN);
-		
 	
 	}
 	
@@ -14,9 +15,8 @@ public class AreaDibujo extends Canvas {
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paint(g);
-		//DIBUJA TODOS LOS ELEMENTOS QUE FORMAN PARTE DEL JUEGO
 		
-		
+		//DIBUJA TOOOOOOOODOS LOS ELEMENSTOS QUE FORMAN PARTE DEL JUEGO
+	    
 	}
-	
 }
