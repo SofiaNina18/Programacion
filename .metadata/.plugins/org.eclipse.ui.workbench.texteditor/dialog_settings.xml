@@ -4,6 +4,9 @@
 	<section name="java.lang.Class">
 		<item key="replaceBarOpen" value="false"/>
 		<list key="findhistory">
+			<item value="elegi"/>
+			<item value="sys"/>
+			<item value="num"/>
 			<item value="regisyt"/>
 			<item value="btn"/>
 			<item value="fin de re"/>
@@ -16,9 +19,6 @@
 			<item value="baseDatos"/>
 			<item value="socios"/>
 			<item value="socios.socios"/>
-			<item value="compro"/>
-			<item value="timer"/>
-			<item value="comprobarfin"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

@@ -12,6 +12,9 @@ public class EventosAhorcado {
 			public void actionPerformed(ActionEvent e) {
 				ahorcado.elegirPalabra();
 				ahorcado.getBtnNueva().setEnabled(false);
+				ahorcado.getAreaDibujo().setDesplazamiento(0);
+				System.out.println(ahorcado.getAreaDibujo().getWidth()+" - "+ahorcado.getAreaDibujo().getHeight()); 
+				
 			}
 		});
 		

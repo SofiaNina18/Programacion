@@ -86,6 +86,8 @@ public class Ahorcado extends JFrame {
 		areaDibujo=new AreaDibujo(this);
 		panelCentro.add(areaDibujo);
 		
+		
+		
 		eventosAhorcado=new EventosAhorcado(this);
 		
 		fichero=new Fichero();

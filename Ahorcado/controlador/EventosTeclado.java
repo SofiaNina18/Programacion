@@ -49,6 +49,8 @@ public class EventosTeclado {
 						if(teclado.getAhorcado().getNumFallos()>=7) {
 							teclado.estadoTeclado(false);
 							teclado.getAhorcado().getBtnNueva().setEnabled(true);
+							//INICIAMOS EL RELOJ
+							teclado.getAhorcado().getAreaDibujo().getEventosAreaDibujo().getReloj().start();
 							
 						}
 					}
