@@ -38,12 +38,14 @@ public class EventosTeclado {
 					lblPalabra.setText(palAux);
 					if(esta) {
 						btn.setBackground(Color.GREEN);
+						btn.setEnabled(false);
 						if(!lblPalabra.getText().contains("_")) {
 							teclado.estadoTeclado(false);
 							teclado.getAhorcado().getBtnNueva().setEnabled(true);
 						}
 					}else {
 						btn.setBackground(Color.RED);
+						btn.setEnabled(false);
 						teclado.getAhorcado().setNumFallos(teclado.getAhorcado().getNumFallos()+1);
 						teclado.getAhorcado().getAreaDibujo().repaint();
 						if(teclado.getAhorcado().getNumFallos()>=7) {

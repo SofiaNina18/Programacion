@@ -11,6 +11,8 @@ public class AreaDibujo extends Canvas {
 	//para crear el doble buffer
 	private Image imagen;
 	private Graphics pantVirtual;
+	private Image [] arrayImagenes;
+	private Fichero fichero;
 	
 
 	public AreaDibujo(Ahorcado ahorcado) {
@@ -18,11 +20,22 @@ public class AreaDibujo extends Canvas {
 		this.setBackground(Color.CYAN);
 		eventosAreaDibujo=new EventosAreaDibujo(this);
 		desplazamiento=0;
+		cargarImagenes();
 	
 	}
 	
 	
 	
+	private void cargarImagenes() {
+		// TODO Auto-generated method stub
+		fichero=new Fichero();
+		//arrayImagenes=fichero.leerImagenes();
+		
+		arrayImagenes=fichero.leerSprite();
+	}
+
+
+
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
@@ -30,7 +43,22 @@ public class AreaDibujo extends Canvas {
 		//dibujarAhorcado(g);
 		//imagenAhorcado=g.get
 		//DIBUJA TOOOOOOOODOS LOS ELEMENSTOS QUE FORMAN PARTE DEL JUEGO
+		dibujarImagenes(g);
+		//dibujarSprite(g);
 	    
+	}
+	
+	public void dibujarImagenes(Graphics g) {
+		g.drawImage(arrayImagenes[ahorcado.getNumFallos()], 0, 0, this.getWidth(), this.getHeight()-50, ahorcado);
+		if(ahorcado.getNumFallos()>=7) {
+			desplazamiento+=5;
+			g.setColor(Color.BLUE);
+			g.setFont(new Font("Arial", Font.BOLD, 24));
+			g.drawString(ahorcado.getTeclado().getPalabra(), 100, 378);
+			g.setColor(Color.BLACK);
+			
+			
+		}
 	}
 	
 	@Override
