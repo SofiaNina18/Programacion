@@ -41,7 +41,8 @@ public class MiJuego extends JFrame {
         pantallaJuego = new AreaJuego(controlador);
         pantallaJuego.addKeyListener(controlador.getControladorTeclado());
         panelPrincipal.add(pantallaJuego, "JUEGO");
-
+        
+        
         crearPantallaFinal();
         panelPrincipal.add(pantallaFinal, "FINAL");
 
