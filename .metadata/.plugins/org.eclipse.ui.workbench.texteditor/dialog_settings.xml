@@ -4,6 +4,7 @@
 	<section name="java.lang.Class">
 		<item key="replaceBarOpen" value="false"/>
 		<list key="findhistory">
+			<item value="pantalla"/>
 			<item value="green"/>
 			<item value="index"/>
 			<item value="ID PEDIDO"/>
@@ -18,7 +19,6 @@
 			<item value="No se ha"/>
 			<item value="modoedi"/>
 			<item value="modoe"/>
-			<item value="btnCancel"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

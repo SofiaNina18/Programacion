@@ -10,7 +10,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.ActionEvent; 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -54,7 +54,7 @@ public class MiJuego extends JFrame {
         pantallaMenu = new JPanel();
         pantallaMenu.setLayout(null);
 
-        // Configuración de imágenes para el efecto Zoom
+       
         ImageIcon iconoNormal = new ImageIcon("imagenes/botonJugar.png");
         Image imgNormal = iconoNormal.getImage().getScaledInstance(237, 214, Image.SCALE_SMOOTH);
         Image imgZoom = iconoNormal.getImage().getScaledInstance(260, 235, Image.SCALE_SMOOTH);
@@ -69,18 +69,18 @@ public class MiJuego extends JFrame {
         botonJugar.setFocusPainted(false);    
         botonJugar.setOpaque(false);           
 
-        // Efecto Zoom al pasar el ratón (Animación de interfaz)
+      
         botonJugar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 botonJugar.setIcon(iconoBotonZoom);
-                botonJugar.setBounds(425, 200, 280, 225); // Se mueve un poco para compensar el tamaño
+                botonJugar.setBounds(425, 200, 280, 225); 
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 botonJugar.setIcon(iconoBotonNormal);
-                botonJugar.setBounds(437, 214, 255, 200); // Vuelve a su sitio
+                botonJugar.setBounds(437, 214, 255, 200);
             }
         });
 
